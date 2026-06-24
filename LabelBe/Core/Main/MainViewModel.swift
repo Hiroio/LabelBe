@@ -7,6 +7,8 @@ import Foundation
 
 @Observable
 final class MainViewModel {
+  var selectedCounter: Counter? = nil
+  
   private let dataManager = SwiftDataManager.shared
   private let soundManager = SoundManager.shared
   
@@ -39,6 +41,13 @@ final class MainViewModel {
 		soundManager.playMinusSound()
 	 }
 	 
+	 refreshCounters()
+  }
+  
+  func deleteCounter() {
+	 guard let counter = selectedCounter else { return }
+	 dataManager.deleteCounter(counter)
+	 selectedCounter = nil
 	 refreshCounters()
   }
 }

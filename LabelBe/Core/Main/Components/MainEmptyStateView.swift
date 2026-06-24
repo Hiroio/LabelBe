@@ -13,7 +13,7 @@ struct MainEmptyStateView: View {
             Spacer()
 
             ContentUnavailableView {
-                Label("Create your first Counter", systemImage: "plus.slash.minus")
+                Label("Create your first Label", systemImage: "plus.slash.minus")
             } description: {
                 Text("Track habits, goals, and daily counts in one clean place.")
             } actions: {
