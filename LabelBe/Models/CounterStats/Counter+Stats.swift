@@ -36,44 +36,55 @@ extension Counter {
         weekDailyTotals().reduce(0) { $0 + $1.total }
     }
 
-    var currentMonthEntryBreakdown: EntryBreakdown {
-        entryBreakdown(forMonthContaining: .now)
+  func currentMonthEntryBreakdown(date: Date = .now) -> EntryBreakdown {
+        entryBreakdown(forMonthContaining: date)
     }
 
-    func monthDailyTotals(calendar: Calendar = .current) -> [DayTotal] {
-        guard let monthInterval = calendar.dateInterval(of: .month, for: .now) else {
+    func monthDailyTotals(forMonthContaining date: Date, calendar: Calendar = .current) -> [DayTotal] {
+        guard let monthInterval = calendar.dateInterval(of: .month, for: date) else {
             return []
         }
 
         var days: [DayTotal] = []
-        var date = monthInterval.start
+        var dayDate = monthInterval.start
 
-        while date < monthInterval.end {
-            days.append(DayTotal(date: date, total: total(on: date, calendar: calendar)))
-            guard let nextDate = calendar.date(byAdding: .day, value: 1, to: date) else { break }
-            date = nextDate
+        while dayDate < monthInterval.end {
+            days.append(DayTotal(date: dayDate, total: total(on: dayDate, calendar: calendar)))
+            guard let nextDate = calendar.date(byAdding: .day, value: 1, to: dayDate) else { break }
+            dayDate = nextDate
         }
 
         return days
     }
 
-    func monthPeriodTotals(calendar: Calendar = .current) -> [MonthPeriodTotal] {
-        MonthPeriodRanges.make(calendar: calendar).map { period in
+    func monthPeriodTotals(forMonthContaining date: Date, calendar: Calendar = .current) -> [MonthPeriodTotal] {
+        MonthPeriodRanges.make(for: date, calendar: calendar).map { period in
             MonthPeriodTotal(
                 id: period.id,
                 label: period.label,
-                total: total(fromDay: period.start, toDay: period.end, calendar: calendar),
+                total: total(
+                    fromDay: period.start,
+                    toDay: period.end,
+                    inMonthContaining: date,
+                    calendar: calendar
+                ),
                 isCurrentPeriod: MonthPeriodRanges.isCurrentPeriod(
                     start: period.start,
                     end: period.end,
+                    inMonthContaining: date,
                     calendar: calendar
                 )
             )
         }
     }
 
-    func total(fromDay start: Int, toDay end: Int, calendar: Calendar = .current) -> Int {
-        guard let monthInterval = calendar.dateInterval(of: .month, for: .now) else { return 0 }
+    func total(
+        fromDay start: Int,
+        toDay end: Int,
+        inMonthContaining date: Date,
+        calendar: Calendar = .current
+    ) -> Int {
+        guard let monthInterval = calendar.dateInterval(of: .month, for: date) else { return 0 }
 
         return entries.reduce(0) { result, entry in
             guard monthInterval.contains(entry.timestamp) else { return result }
@@ -87,6 +98,12 @@ extension Counter {
 
     var todayEntryBreakdown: EntryBreakdown {
         entryBreakdown(on: .now)
+    }
+
+    func todayEntries(calendar: Calendar = .current) -> [CounterEntry] {
+        entries
+            .filter { calendar.isDate($0.timestamp, inSameDayAs: .now) }
+            .sorted { $0.timestamp > $1.timestamp }
     }
 
     var currentWeekEntryBreakdown: EntryBreakdown {

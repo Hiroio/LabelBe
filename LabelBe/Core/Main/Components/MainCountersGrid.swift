@@ -42,7 +42,7 @@ struct MainCountersGrid: View {
                 }
             }
             .padding(.horizontal, AppDesign.gridPadding)
-            .padding(.bottom, 12)
+            .padding(.bottom, AppDesign.tabBarHeight + 12)
         }
         .scrollIndicators(.hidden)
     }

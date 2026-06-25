@@ -23,5 +23,5 @@ struct CounterStepButtonsView: View {
 }
 
 #Preview {
-    CounterStepButtonsView(accent: .indigo, onMinus: {}, onPlus: {})
+    CounterStepButtonsView(accent: AppDesign.accent, onMinus: {}, onPlus: {})
 }

@@ -39,4 +39,5 @@ struct FirstOnBoardingView: View {
         AppBackgroundView()
         FirstOnBoardingView()
     }
+	 .preferredColorScheme(.dark)
 }

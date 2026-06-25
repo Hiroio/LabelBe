@@ -17,20 +17,20 @@ struct CounterStatsSummaryCard: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(.background, in: .rect(cornerRadius: AppDesign.cardCornerRadius))
+        .background(AppDesign.card, in: .rect(cornerRadius: AppDesign.cardCornerRadius))
     }
 
     private func summaryColumn(title: String, value: Int) -> some View {
         VStack(spacing: 6) {
             Text(title)
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppDesign.secondaryText)
 
             Text(value, format: .number)
                 .font(.title2)
                 .bold()
                 .monospacedDigit()
-                .foregroundStyle(title == "Total" ? accent : .primary)
+                .foregroundStyle(title == "Total" ? accent : AppDesign.primaryText)
         }
         .frame(maxWidth: .infinity)
     }
@@ -39,7 +39,8 @@ struct CounterStatsSummaryCard: View {
 #Preview {
     CounterStatsSummaryCard(
         breakdown: EntryBreakdown(pluses: 5, minuses: 2, total: 3),
-        accent: .indigo
+        accent: AppDesign.accent
     )
     .padding()
+    .background(AppBackgroundView())
 }

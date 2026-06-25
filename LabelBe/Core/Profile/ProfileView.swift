@@ -20,8 +20,7 @@ struct ProfileView: View {
                     ProfileCardView()
 
                     ProfileTotalStatsSection(
-                        breakdown: viewModel.currentMonthBreakdown,
-                        monthPeriods: viewModel.currentMonthPeriods
+                        breakdown: viewModel.currentMonthBreakdown
                     )
 
                     ProfileSettingsTogglesCard(viewModel: viewModel)

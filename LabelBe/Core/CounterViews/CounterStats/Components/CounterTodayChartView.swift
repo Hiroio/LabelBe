@@ -25,7 +25,7 @@ struct CounterTodayChartView: View {
         .frame(height: 160)
         .frame(maxWidth: .infinity)
         .padding()
-        .background(.background, in: .rect(cornerRadius: AppDesign.cardCornerRadius))
+        .background(AppDesign.card, in: .rect(cornerRadius: AppDesign.cardCornerRadius))
     }
 }
 
@@ -34,7 +34,7 @@ struct CounterTodayChartView: View {
         data: [
             DayTotal(date: .now, total: 5)
         ],
-        accent: .indigo
+        accent: AppDesign.accent
     )
     .padding()
 }

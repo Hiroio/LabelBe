@@ -13,10 +13,19 @@ struct CustomTabBar: View {
             TabBarButton(
                 icon: "house",
                 activeIcon: "house.fill",
-                label: "Counters",
+                label: "Home",
                 isActive: navigation.mainScreens == .main
             ) {
                 selectTab(.main)
+            }
+
+            TabBarButton(
+                icon: "rectangle.grid.2x2",
+                activeIcon: "rectangle.grid.2x2.fill",
+                label: "Grid",
+                isActive: navigation.mainScreens == .grid
+            ) {
+                selectTab(.grid)
             }
 
             TabBarButton(

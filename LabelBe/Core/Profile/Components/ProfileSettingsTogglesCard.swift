@@ -11,6 +11,7 @@ struct ProfileSettingsTogglesCard: View {
     var body: some View {
         VStack(spacing: 0) {
             Toggle("Sounds", isOn: $viewModel.soundsEnabled)
+                .tint(AppDesign.accent)
                 .padding(.horizontal, 18)
                 .padding(.vertical, 14)
 
@@ -18,6 +19,7 @@ struct ProfileSettingsTogglesCard: View {
                 .padding(.leading, 18)
 
             Toggle("Notifications", isOn: $viewModel.notificationsEnabled)
+                .tint(AppDesign.accent)
                 .padding(.horizontal, 18)
                 .padding(.vertical, 14)
         }

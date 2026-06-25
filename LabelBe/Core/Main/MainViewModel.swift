@@ -7,47 +7,31 @@ import Foundation
 
 @Observable
 final class MainViewModel {
-  var selectedCounter: Counter? = nil
-  
-  private let dataManager = SwiftDataManager.shared
-  private let soundManager = SoundManager.shared
-  
-  private(set) var counters: [Counter] = []
-  
-  init() {
-	 refreshCounters()
-  }
-  
-  func refreshCounters() {
-	 counters = dataManager.fetchCounters()
-  }
-  
-  func createCounter(name: String, icon: String) {
-	 let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-	 guard !trimmed.isEmpty else { return }
-	 
-	 dataManager.addCounter(name: trimmed, icon: icon)
-	 refreshCounters()
-  }
-  
-  func recordTap(on counter: Counter, value: Int) {
-	 guard value == 1 || value == -1 else { return }
-	 
-	 dataManager.addEntry(to: counter, value: value)
-	 
-	 if value == 1 {
-		soundManager.playPlusSound()
-	 } else {
-		soundManager.playMinusSound()
-	 }
-	 
-	 refreshCounters()
-  }
-  
-  func deleteCounter() {
-	 guard let counter = selectedCounter else { return }
-	 dataManager.deleteCounter(counter)
-	 selectedCounter = nil
-	 refreshCounters()
-  }
+    private let dataManager = SwiftDataManager.shared
+
+    private(set) var counters: [Counter] = []
+
+    var latestCounters: [Counter] {
+        counters.latestCounters(limit: 2)
+    }
+
+    var topTodayRows: [CounterPeriodRow] {
+        counters.topTodayRows(limit: 3)
+    }
+
+    var currentMonthPeriods: [MonthPeriodTotal] {
+        counters.monthPeriodTotals(forMonthContaining: .now)
+    }
+
+    func refreshCounters() {
+        counters = dataManager.fetchCounters()
+    }
+
+    func createCounter(name: String, icon: String, tags: [String]) {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+
+        dataManager.addCounter(name: trimmed, icon: icon, tags: tags)
+        refreshCounters()
+    }
 }

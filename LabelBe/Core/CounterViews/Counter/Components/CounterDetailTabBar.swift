@@ -40,7 +40,7 @@ extension CounterDetailTabBar{
 			 selectedTab = tab
 		}
 		.font(selectedTab == tab ? .title3 : .body)
-		.foregroundStyle(selectedTab == tab ? AppDesign.accent : .secondary)
+		.foregroundStyle(selectedTab == tab ? AppDesign.accent : AppDesign.secondaryText)
 		.frame(maxWidth: .infinity)
   }
 

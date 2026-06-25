@@ -39,8 +39,15 @@ enum MonthPeriodRanges {
         }
     }
 
-    static func isCurrentPeriod(start: Int, end: Int, for date: Date = .now, calendar: Calendar = .current) -> Bool {
-        let today = calendar.component(.day, from: date)
+    static func isCurrentPeriod(
+        start: Int,
+        end: Int,
+        inMonthContaining month: Date,
+        calendar: Calendar = .current
+    ) -> Bool {
+        guard calendar.isDate(month, equalTo: .now, toGranularity: .month) else { return false }
+
+        let today = calendar.component(.day, from: .now)
         return today >= start && today <= end
     }
 }

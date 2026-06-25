@@ -11,7 +11,7 @@ struct HeaderCloseButtonModifier: ViewModifier {
             .labelStyle(.iconOnly)
             .buttonStyle(.plain)
             .frame(width: AppDesign.headerButtonSize, height: AppDesign.headerButtonSize)
-            .background(.ultraThinMaterial, in: .circle)
-            .foregroundStyle(.primary)
+            .background(AppDesign.elevated, in: .circle)
+            .foregroundStyle(AppDesign.primaryText)
     }
 }

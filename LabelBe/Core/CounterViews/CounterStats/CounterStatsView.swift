@@ -22,6 +22,7 @@ struct CounterStatsView: View {
                 )
 
                 CounterMonthStatsSection(
+                    currentMonth: $viewModel.currentMonth,
                     breakdown: viewModel.monthBreakdown,
                     chartData: viewModel.currentMonthPeriods,
                     accent: viewModel.accent

@@ -12,22 +12,26 @@ struct CreateCounterSheet: View {
     let onCreate: () -> Void
 
     var body: some View {
-        VStack(spacing: 24) {
-            SelectedIconPreview(icon: viewModel.selectedIcon)
-                .padding(.top, 8)
+        ScrollView {
+            VStack(spacing: 20) {
+                SelectedIconPreview(icon: viewModel.selectedIcon)
+                    .padding(.top, 8)
 
-            CreateCounterNameField(name: $viewModel.name)
+                CreateCounterNameField(name: $viewModel.name)
 
-            IconPickerGrid(selection: $viewModel.selectedIcon)
+                CounterTagView(tags: $viewModel.tags)
+                    .padding(.bottom, 4)
 
-            Spacer(minLength: 0)
+                IconPickerGrid(selection: $viewModel.selectedIcon)
 
-            Button("Create Counter", action: create)
-                .buttonStyle(AccentProminentButtonStyle())
-                .disabled(!viewModel.canCreate)
+                Button("Create Counter", action: create)
+                    .buttonStyle(AccentProminentButtonStyle())
+                    .disabled(!viewModel.canCreate)
+            }
+            .padding(.horizontal, AppDesign.screenPadding)
+            .padding(.vertical, 20)
         }
-        .padding(.horizontal, AppDesign.screenPadding)
-        .padding(.vertical, 20)
+        .scrollIndicators(.hidden)
         .overlay(alignment: .topTrailing) {
             Button("Cancel") {
                 dismiss()
@@ -37,7 +41,7 @@ struct CreateCounterSheet: View {
             .padding(.top, 12)
             .padding(.trailing, AppDesign.screenPadding)
         }
-        .presentationDetents([.height(420)])
+        .presentationDetents([.large])
         .presentationDragIndicator(.visible)
         .presentationCornerRadius(AppDesign.cardCornerRadius)
     }

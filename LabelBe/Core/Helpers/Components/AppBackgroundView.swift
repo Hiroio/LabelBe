@@ -8,7 +8,7 @@ import SwiftUI
 struct AppBackgroundView: View {
     var body: some View {
         ZStack {
-            Color(.systemGroupedBackground)
+            AppDesign.background
                 .ignoresSafeArea()
 
             RadialGradient(
@@ -25,7 +25,7 @@ struct AppBackgroundView: View {
 
             RadialGradient(
                 colors: [
-                    AppDesign.accentSecondary.opacity(0.1),
+                    AppDesign.accentSecondary.opacity(0.10),
                     .clear,
                 ],
                 center: .bottomTrailing,

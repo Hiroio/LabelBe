@@ -37,7 +37,7 @@ struct OnBoardingView: View {
                 } label: {
                     Text(selection == 2 ? "Begin" : "Continue")
                         .font(.headline)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(AppDesign.primaryText)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(

@@ -9,6 +9,7 @@ import SwiftUI
 struct MonthPeriodChartView: View {
     let data: [MonthPeriodTotal]
     let accent: Color
+    var showsBackground: Bool = true
 
     var body: some View {
         Chart(data) { item in
@@ -30,8 +31,13 @@ struct MonthPeriodChartView: View {
         }
         .frame(height: 180)
         .frame(maxWidth: .infinity)
-        .padding()
-        .background(.background, in: .rect(cornerRadius: AppDesign.cardCornerRadius))
+        .padding(showsBackground ? 16 : 0)
+        .background {
+            if showsBackground {
+                RoundedRectangle(cornerRadius: AppDesign.cardCornerRadius, style: .continuous)
+                    .fill(AppDesign.card)
+            }
+        }
     }
 }
 
@@ -44,7 +50,7 @@ struct MonthPeriodChartView: View {
             MonthPeriodTotal(id: 3, label: "22-28", total: 3, isCurrentPeriod: true),
             MonthPeriodTotal(id: 4, label: "29-30", total: 0, isCurrentPeriod: false),
         ],
-        accent: .indigo
+        accent: AppDesign.accent
     )
     .padding()
 }

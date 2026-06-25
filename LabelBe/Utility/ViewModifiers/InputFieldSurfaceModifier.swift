@@ -10,6 +10,6 @@ struct InputFieldSurfaceModifier: ViewModifier {
         content
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .background(.background.secondary, in: .rect(cornerRadius: AppDesign.inputCornerRadius))
+            .background(AppDesign.elevated, in: .rect(cornerRadius: AppDesign.inputCornerRadius))
     }
 }

@@ -11,14 +11,18 @@ final class Counter {
     var id: UUID
     var name: String
     var icon: String
+    var tags: [String]
+    var createdAt: Date
 
     @Relationship(deleteRule: .cascade, inverse: \CounterEntry.counter)
     var entries: [CounterEntry]
 
-    init(name: String, icon: String) {
+    init(name: String, icon: String, tags: [String] = []) {
         id = UUID()
         self.name = name
         self.icon = icon
+        self.tags = tags
+        createdAt = .now
         entries = []
     }
 

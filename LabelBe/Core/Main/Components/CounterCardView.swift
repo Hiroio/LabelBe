@@ -22,7 +22,7 @@ struct CounterCardView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(counter.name)
                     .font(.subheadline)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(AppDesign.primaryText)
                     .lineLimit(2)
 
                 Text(counter.total, format: .number)

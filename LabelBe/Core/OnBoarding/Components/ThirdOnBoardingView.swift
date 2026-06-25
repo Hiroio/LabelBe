@@ -48,6 +48,7 @@ extension ThirdOnBoardingView {
     private var settingsCard: some View {
         VStack(spacing: 0) {
             Toggle("Sounds", isOn: $soundsEnabled)
+                .tint(AppDesign.accent)
                 .padding(.horizontal, 18)
                 .padding(.vertical, 14)
 
@@ -55,6 +56,7 @@ extension ThirdOnBoardingView {
                 .padding(.leading, 18)
 
             Toggle("Notifications", isOn: $notificationsEnabled)
+                .tint(AppDesign.accent)
                 .padding(.horizontal, 18)
                 .padding(.vertical, 14)
         }

@@ -24,9 +24,9 @@ struct CounterTodayStatsSection: View {
 
 #Preview {
     CounterTodayStatsSection(
-        breakdown: EntryBreakdown(pluses: 4, minuses: 1, total: 3),
-        chartData: [DayTotal(date: .now, total: 3)],
-        accent: .indigo
+        breakdown: EntryBreakdown(pluses: 10, minuses: 3, total: 7),
+		  chartData: [DayTotal(date: .now, total: 3), DayTotal(date: .distantPast, total: 4)],
+        accent: AppDesign.accent
     )
     .padding()
 }

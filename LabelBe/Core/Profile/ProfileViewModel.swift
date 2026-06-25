@@ -35,10 +35,6 @@ final class ProfileViewModel {
         counters.currentMonthEntryBreakdown
     }
 
-    var currentMonthPeriods: [MonthPeriodTotal] {
-        counters.monthPeriodTotals()
-    }
-
     func refresh() {
         counters = dataManager.fetchCounters()
     }

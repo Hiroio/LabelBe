@@ -17,6 +17,12 @@ struct CounterDetailView: View {
         VStack(spacing: 0) {
             SecondaryScreenHeaderView(title: viewModel.counter.name, onClose: dismiss)
 
+            if !viewModel.counter.tags.isEmpty {
+                CounterTagsDisplayView(tags: viewModel.counter.tags)
+                    .padding(.horizontal, AppDesign.screenPadding)
+                    .padding(.bottom, AppDesign.spacingS)
+            }
+
             CounterDetailTabContentView(
                 viewModel: viewModel,
                 onMinus: { viewModel.recordTap(value: -1) },
@@ -26,7 +32,7 @@ struct CounterDetailView: View {
             CounterDetailTabBar(selectedTab: $viewModel.selectedTab)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-		  .animation(.easeInOut, value: viewModel.selectedTab)
+        .animation(.easeInOut, value: viewModel.selectedTab)
         .background { AppBackgroundView() }
     }
 

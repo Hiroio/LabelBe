@@ -73,8 +73,8 @@ extension CounterDetailCounterTabView{
   private func CounterIconView(icon: String, accent: Color) -> some View {
 	 Image(systemName: icon)
 		  .font(.system(size: 36))
-		  .foregroundStyle(AppDesign.accent)
-		  .accentIconBadge(color: AppDesign.accent, size: 72)
+		  .foregroundStyle(accent)
+		  .accentIconBadge(color: accent, size: 72)
 		  .padding(.top, 8)
 		  .accessibilityHidden(true)
   }

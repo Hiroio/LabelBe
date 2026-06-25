@@ -6,5 +6,5 @@
 import Foundation
 
 enum MainScreensEnum: String, CaseIterable {
-    case main, profile
+    case main, grid, profile
 }

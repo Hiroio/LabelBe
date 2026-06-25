@@ -24,10 +24,20 @@ final class SwiftDataManager {
         )
         return (try? context.fetch(descriptor)) ?? []
     }
+  
+  func fetchById(_ id: UUID) throws -> Counter?{
+	 let descriptor = FetchDescriptor<Counter>(predicate: #Predicate { $0.id == id })
+	 return try context.fetch(descriptor).first
+  }
 
-    func addCounter(name: String, icon: String) {
-        let counter = Counter(name: name, icon: icon)
+    func addCounter(name: String, icon: String, tags: [String] = []) {
+        let counter = Counter(name: name, icon: icon, tags: normalizedTags(from: tags))
         context.insert(counter)
+        save()
+    }
+
+    func updateTags(for counter: Counter, tags: [String]) {
+        counter.tags = normalizedTags(from: tags)
         save()
     }
 
@@ -59,5 +69,16 @@ final class SwiftDataManager {
         } catch {
             assertionFailure("SwiftData save failed: \(error.localizedDescription)")
         }
+    }
+
+    private func normalizedTags(from tags: [String]) -> [String] {
+        var result: [String] = []
+        for tag in tags {
+            let trimmed = tag.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else { continue }
+            guard !result.contains(where: { $0.lowercased() == trimmed.lowercased() }) else { continue }
+            result.append(trimmed)
+        }
+        return result
     }
 }

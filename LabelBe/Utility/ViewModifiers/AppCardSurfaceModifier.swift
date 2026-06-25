@@ -10,7 +10,7 @@ struct AppCardSurfaceModifier: ViewModifier {
         content
             .background {
                 RoundedRectangle(cornerRadius: AppDesign.cardCornerRadius, style: .continuous)
-                    .fill(.background)
+                    .fill(AppDesign.card)
                     .shadow(color: AppDesign.cardShadowColor, radius: 10, y: 5)
             }
     }

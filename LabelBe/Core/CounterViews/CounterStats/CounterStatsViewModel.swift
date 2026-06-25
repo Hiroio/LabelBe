@@ -8,6 +8,7 @@ import SwiftUI
 @Observable
 final class CounterStatsViewModel {
     let counter: Counter
+  var currentMonth: Date = .now
 
     init(counter: Counter) {
         self.counter = counter
@@ -18,7 +19,7 @@ final class CounterStatsViewModel {
     }
 
     var monthBreakdown: EntryBreakdown {
-        counter.currentMonthEntryBreakdown
+        counter.currentMonthEntryBreakdown(date: currentMonth)
     }
 
     var last7Days: [DayTotal] {
@@ -26,7 +27,7 @@ final class CounterStatsViewModel {
     }
 
     var currentMonthPeriods: [MonthPeriodTotal] {
-        counter.monthPeriodTotals()
+        counter.monthPeriodTotals(forMonthContaining: currentMonth)
     }
 
     var accent: Color {

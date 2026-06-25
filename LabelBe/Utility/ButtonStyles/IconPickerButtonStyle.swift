@@ -12,7 +12,7 @@ struct IconPickerButtonStyle: ButtonStyle {
         configuration.label
             .font(.body)
             .frame(width: 44, height: 44)
-            .foregroundStyle(isSelected ? AppDesign.accent : .secondary)
+            .foregroundStyle(isSelected ? AppDesign.accent : AppDesign.secondaryText)
             .background {
                 if isSelected {
                     Circle()

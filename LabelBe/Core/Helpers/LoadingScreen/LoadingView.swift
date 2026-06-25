@@ -24,7 +24,7 @@ struct LoadingView: View {
 		  
 		  ZStack(alignment: .leading){
 			 RoundedRectangle(cornerRadius: 20)
-				.fill(.ultraThinMaterial)
+				.fill(AppDesign.elevated)
 				.frame(maxWidth: .infinity)
 				.frame(height: 15)
 			 

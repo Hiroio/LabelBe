@@ -10,10 +10,12 @@ struct MainNavigationView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ZStack{
+            ZStack {
                 switch navigation.mainScreens {
                 case .main:
                     MainView()
+                case .grid:
+                    CounterGridView()
                 case .profile:
                     ProfileView()
                 }
