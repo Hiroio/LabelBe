@@ -35,7 +35,11 @@ final class ProfileViewModel {
         counters.currentMonthEntryBreakdown
     }
 
+    var exportFileURL: URL? {
+        CounterExporter.writeExportFile(for: counters)
+    }
+
     func refresh() {
-        counters = dataManager.fetchCounters()
+        counters = dataManager.fetchAllCounters()
     }
 }

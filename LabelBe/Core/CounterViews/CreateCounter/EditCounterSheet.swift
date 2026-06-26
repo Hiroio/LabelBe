@@ -1,25 +1,18 @@
 //
-//  CreateCounterSheet.swift
+//  EditCounterSheet.swift
 //  LabelBe
 //
 
 import SwiftUI
 
-struct CreateCounterSheet: View {
+struct EditCounterSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var viewModel: CreateCounterViewModel
-
-    let onCreate: () -> Void
+    let onSave: () -> Void
 
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                CounterTemplatesScroll { template in
-                    withAnimation(AppDesign.quickAnimation) {
-                        viewModel.apply(template: template)
-                    }
-                }
-
                 SelectedIconPreview(icon: viewModel.selectedIcon)
                     .padding(.top, 8)
 
@@ -30,7 +23,7 @@ struct CreateCounterSheet: View {
 
                 IconPickerGrid(selection: $viewModel.selectedIcon)
 
-                Button("Create Counter", action: create)
+                Button("Save Changes", action: save)
                     .buttonStyle(AccentProminentButtonStyle())
                     .disabled(!viewModel.canCreate)
             }
@@ -52,8 +45,8 @@ struct CreateCounterSheet: View {
         .presentationCornerRadius(AppDesign.cardCornerRadius)
     }
 
-    private func create() {
-        onCreate()
+    private func save() {
+        onSave()
         dismiss()
     }
 }
@@ -61,5 +54,5 @@ struct CreateCounterSheet: View {
 #Preview {
     @Previewable @State var viewModel = CreateCounterViewModel()
 
-    CreateCounterSheet(viewModel: viewModel, onCreate: {})
+    EditCounterSheet(viewModel: viewModel, onSave: {})
 }

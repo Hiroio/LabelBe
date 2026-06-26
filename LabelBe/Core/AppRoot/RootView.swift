@@ -21,7 +21,7 @@ struct RootView: View {
                             firstLaunch.toggle()
                         }
                     }
-            } else if onBoardingState {
+            } else if !onBoardingState {
                 MainNavigationView()
                 SecondaryView()
             } else {

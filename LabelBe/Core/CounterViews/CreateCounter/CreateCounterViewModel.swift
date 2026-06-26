@@ -24,4 +24,16 @@ final class CreateCounterViewModel {
         selectedIcon = CounterIconCatalog.defaultIcon
         tags = []
     }
+
+    func load(from counter: Counter) {
+        name = counter.name
+        selectedIcon = counter.icon
+        tags = counter.tags
+    }
+
+    func apply(template: CounterTemplate) {
+        name = template.name
+        selectedIcon = template.icon
+        tags = template.tags
+    }
 }

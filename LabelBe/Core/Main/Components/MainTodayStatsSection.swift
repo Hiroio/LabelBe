@@ -8,7 +8,6 @@ import SwiftUI
 struct MainTodayStatsSection: View {
     @Environment(NavigationManager.self) private var navigation
     let rows: [CounterPeriodRow]
-    let onSeeAll: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: AppDesign.spacingM) {
@@ -18,13 +17,6 @@ struct MainTodayStatsSection: View {
                     .foregroundStyle(AppDesign.primaryText)
 
                 Spacer()
-
-                Button(action: onSeeAll) {
-                    Text("See all")
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(AppDesign.accent)
-                }
-                .buttonStyle(.plain)
             }
 
             if rows.isEmpty {
@@ -47,7 +39,6 @@ struct MainTodayStatsSection: View {
             }
         }
         .padding(AppDesign.spacingM)
-        .appCardSurface()
     }
 }
 
@@ -58,8 +49,7 @@ struct MainTodayStatsSection: View {
                 counter: Counter(name: "Water", icon: "drop.fill"),
                 periodDelta: 5
             ),
-        ],
-        onSeeAll: {}
+        ]
     )
     .padding()
     .background(AppBackgroundView())

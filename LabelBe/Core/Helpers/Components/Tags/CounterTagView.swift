@@ -23,8 +23,6 @@ struct CounterTagView: View {
                 )
                 .font(.subheadline)
                 .foregroundStyle(AppDesign.primaryText)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 10)
                 .inputFieldSurface()
 
                 Button {

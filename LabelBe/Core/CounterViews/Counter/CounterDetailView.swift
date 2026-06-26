@@ -8,6 +8,8 @@ import SwiftUI
 struct CounterDetailView: View {
     @Environment(NavigationManager.self) private var navigation
     @State private var viewModel: CounterDetailViewModel
+    @State private var editViewModel = CreateCounterViewModel()
+    @State private var isShowingEditSheet = false
 
     init(counter: Counter) {
         _viewModel = State(initialValue: CounterDetailViewModel(counter: counter))
@@ -15,13 +17,14 @@ struct CounterDetailView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            SecondaryScreenHeaderView(title: viewModel.counter.name, onClose: dismiss)
-
-            if !viewModel.counter.tags.isEmpty {
-                CounterTagsDisplayView(tags: viewModel.counter.tags)
-                    .padding(.horizontal, AppDesign.screenPadding)
-                    .padding(.bottom, AppDesign.spacingS)
-            }
+            CounterDetailHeaderView(
+                title: viewModel.counter.name,
+                tags: viewModel.tags,
+                isPinned: viewModel.isPinned,
+                onClose: dismiss,
+                onEdit: openEdit,
+                onTogglePin: viewModel.togglePin
+            )
 
             CounterDetailTabContentView(
                 viewModel: viewModel,
@@ -34,10 +37,24 @@ struct CounterDetailView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.easeInOut, value: viewModel.selectedTab)
         .background { AppBackgroundView() }
+        .sheet(isPresented: $isShowingEditSheet) {
+            EditCounterSheet(viewModel: editViewModel) {
+                viewModel.saveChanges(
+                    name: editViewModel.trimmedName,
+                    icon: editViewModel.selectedIcon,
+                    tags: editViewModel.tags
+                )
+            }
+        }
     }
 
     private func dismiss() {
         navigation.counterScreen = nil
+    }
+
+    private func openEdit() {
+        editViewModel.load(from: viewModel.counter)
+        isShowingEditSheet = true
     }
 }
 

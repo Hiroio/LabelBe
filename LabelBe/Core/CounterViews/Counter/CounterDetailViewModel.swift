@@ -31,6 +31,14 @@ final class CounterDetailViewModel {
         AppDesign.cardAccent(for: counter.id)
     }
 
+    var isPinned: Bool {
+        counter.isPinned
+    }
+
+    var tags: [String] {
+        counter.tags
+    }
+
     func recordTap(value: Int) {
         guard value == 1 || value == -1 else { return }
 
@@ -42,6 +50,16 @@ final class CounterDetailViewModel {
             soundManager.playMinusSound()
         }
 
+        refreshID = UUID()
+    }
+
+    func togglePin() {
+        dataManager.setPinned(counter, isPinned: !counter.isPinned)
+        refreshID = UUID()
+    }
+
+    func saveChanges(name: String, icon: String, tags: [String]) {
+        dataManager.updateCounter(counter, name: name, icon: icon, tags: tags)
         refreshID = UUID()
     }
 }

@@ -15,6 +15,17 @@ struct AppTodayStatsView: View {
 
             ScrollView {
                 VStack(spacing: AppDesign.sectionSpacing) {
+                    if !viewModel.allTags.isEmpty {
+                        TagScroll(
+                            tags: viewModel.allTags,
+                            selectedTag: $viewModel.selectedTag
+                        )
+                    }
+
+                    MainWeekComparisonSection(comparison: viewModel.weekComparison) {
+                        navigation.counterScreen = .weekComparison(tag: viewModel.selectedTag)
+                    }
+
                     CounterStatsMonthCard(
                         currentMonth: $viewModel.currentMonth,
                         chartData: viewModel.monthPeriodTotals,

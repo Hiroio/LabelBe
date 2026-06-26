@@ -12,12 +12,42 @@ struct CounterCardView: View {
         AppDesign.cardAccent(for: counter.id)
     }
 
+    private var streak: Int {
+        counter.currentStreak()
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Image(systemName: counter.icon)
-                .font(.title3)
-                .foregroundStyle(accent)
-                .accentIconBadge(color: accent, size: 40)
+            HStack {
+                Image(systemName: counter.icon)
+                    .font(.title3)
+                    .foregroundStyle(accent)
+                    .accentIconBadge(color: accent, size: 40)
+
+                Spacer()
+
+                VStack(alignment: .trailing, spacing: 6) {
+                    if counter.isPinned {
+                        Image(systemName: "pin.fill")
+                            .font(.caption2)
+                            .foregroundStyle(AppDesign.accent)
+                    }
+
+                    if streak > 0 {
+                        HStack(spacing: 3) {
+                            Image(systemName: "flame.fill")
+                                .font(.caption2)
+                            Text("\(streak)")
+                                .font(.caption.weight(.semibold))
+                                .monospacedDigit()
+                        }
+                        .foregroundStyle(accent)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(accent.opacity(0.18), in: .capsule)
+                    }
+                }
+            }
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(counter.name)

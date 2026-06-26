@@ -18,17 +18,29 @@ final class SwiftDataManager {
         self.modelContext = modelContext
     }
 
-    func fetchCounters() -> [Counter] {
+    func fetchActiveCounters() -> [Counter] {
+        fetchCounters(archived: false)
+    }
+
+    func fetchArchivedCounters() -> [Counter] {
+        fetchCounters(archived: true)
+    }
+
+    func fetchAllCounters() -> [Counter] {
         let descriptor = FetchDescriptor<Counter>(
             sortBy: [SortDescriptor(\.name, order: .forward)]
         )
         return (try? context.fetch(descriptor)) ?? []
     }
-  
-  func fetchById(_ id: UUID) throws -> Counter?{
-	 let descriptor = FetchDescriptor<Counter>(predicate: #Predicate { $0.id == id })
-	 return try context.fetch(descriptor).first
-  }
+
+    func fetchCounters() -> [Counter] {
+        fetchActiveCounters()
+    }
+
+    func fetchById(_ id: UUID) throws -> Counter? {
+        let descriptor = FetchDescriptor<Counter>(predicate: #Predicate { $0.id == id })
+        return try context.fetch(descriptor).first
+    }
 
     func addCounter(name: String, icon: String, tags: [String] = []) {
         let counter = Counter(name: name, icon: icon, tags: normalizedTags(from: tags))
@@ -36,8 +48,31 @@ final class SwiftDataManager {
         save()
     }
 
+    func updateCounter(_ counter: Counter, name: String, icon: String, tags: [String]) {
+        counter.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        counter.icon = icon
+        counter.tags = normalizedTags(from: tags)
+        save()
+    }
+
     func updateTags(for counter: Counter, tags: [String]) {
         counter.tags = normalizedTags(from: tags)
+        save()
+    }
+
+    func setPinned(_ counter: Counter, isPinned: Bool) {
+        counter.isPinned = isPinned
+        save()
+    }
+
+    func archiveCounter(_ counter: Counter) {
+        counter.isArchived = true
+        counter.isPinned = false
+        save()
+    }
+
+    func restoreCounter(_ counter: Counter) {
+        counter.isArchived = false
         save()
     }
 
@@ -54,6 +89,14 @@ final class SwiftDataManager {
         counter.entries.append(entry)
         context.insert(entry)
         save()
+    }
+
+    private func fetchCounters(archived: Bool) -> [Counter] {
+        let descriptor = FetchDescriptor<Counter>(
+            predicate: #Predicate { $0.isArchived == archived },
+            sortBy: [SortDescriptor(\.name, order: .forward)]
+        )
+        return (try? context.fetch(descriptor)) ?? []
     }
 
     private var context: ModelContext {

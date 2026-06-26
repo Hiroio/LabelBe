@@ -17,6 +17,12 @@ struct CounterDetailCounterTabView: View {
                 accent: viewModel.accent
             )
 			 
+			 if !viewModel.counter.tags.isEmpty {
+				  CounterTagsDisplayView(tags: viewModel.counter.tags)
+						.padding(.horizontal, AppDesign.screenPadding)
+						.padding(.bottom, AppDesign.spacingS)
+			 }
+			 
             Spacer()
 
             VStack(spacing: 8) {

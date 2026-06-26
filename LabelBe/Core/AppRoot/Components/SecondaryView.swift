@@ -15,6 +15,8 @@ struct SecondaryView: View {
                     switch screen {
                     case .stats:
                         AppTodayStatsView()
+                    case .weekComparison(let tag):
+                        WeekComparisonDetailView(selectedTag: tag)
                     case .counter(let counter):
                         CounterDetailView(counter: counter)
                     }
@@ -30,7 +32,7 @@ struct SecondaryView: View {
 
     private func screenTransition(for screen: SecondaryScreensEnum) -> AnyTransition {
         switch screen {
-        case .stats:
+        case .stats, .weekComparison:
             .move(edge: .bottom).combined(with: .opacity)
         case .counter:
             .move(edge: .bottom).combined(with: .opacity)

@@ -13,6 +13,8 @@ final class Counter {
     var icon: String
     var tags: [String]
     var createdAt: Date
+    var isPinned: Bool
+    var isArchived: Bool
 
     @Relationship(deleteRule: .cascade, inverse: \CounterEntry.counter)
     var entries: [CounterEntry]
@@ -23,6 +25,8 @@ final class Counter {
         self.icon = icon
         self.tags = tags
         createdAt = .now
+        isPinned = false
+        isArchived = false
         entries = []
     }
 

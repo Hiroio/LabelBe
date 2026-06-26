@@ -22,11 +22,11 @@ struct MainView: View {
                     VStack(spacing: AppDesign.sectionSpacing) {
                         MainLatestCountersSection(counters: viewModel.latestCounters)
 
-                        MainMonthChartSection(monthPeriods: viewModel.currentMonthPeriods)
-
-                        MainTodayStatsSection(rows: viewModel.topTodayRows) {
-                            navigation.counterScreen = .stats
+                        MainWeekComparisonSection(comparison: viewModel.weekComparison) {
+                            navigation.counterScreen = .weekComparison(tag: nil)
                         }
+
+                        statsCard
                     }
                     .padding(.horizontal, AppDesign.screenPadding)
                     .padding(.bottom, AppDesign.tabBarHeight + AppDesign.spacingL)
@@ -46,6 +46,39 @@ struct MainView: View {
                 createViewModel.reset()
             }
         }
+    }
+
+    private var statsCard: some View {
+        VStack(spacing: AppDesign.spacingM) {
+            HStack {
+                Text("Stats")
+                    .font(.headline)
+                    .foregroundStyle(AppDesign.primaryText)
+
+                Spacer()
+
+                Button {
+                    navigation.counterScreen = .stats
+                } label: {
+                    Text("See all")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(AppDesign.accent)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, AppDesign.spacingM)
+            .padding(.top, AppDesign.spacingM)
+
+            MainTodaySummarySection(breakdown: viewModel.todayBreakdown)
+                .padding(.horizontal, AppDesign.spacingM)
+
+            MainMonthChartSection(monthPeriods: viewModel.currentMonthPeriods) {
+                navigation.counterScreen = .stats
+            }
+
+            MainTodayStatsSection(rows: viewModel.topTodayRows)
+        }
+        .appCardSurface()
     }
 
     private func openCreation() {

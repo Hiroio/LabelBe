@@ -29,7 +29,7 @@ struct OnBoardingView: View {
                 Button {
                     withAnimation(AppDesign.tabAnimation) {
                         if selection == 2 {
-                            onBoardingState = true
+                            onBoardingState = false
                         } else {
                             selection += 1
                         }

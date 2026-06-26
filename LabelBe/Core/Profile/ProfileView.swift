@@ -23,6 +23,9 @@ struct ProfileView: View {
                         breakdown: viewModel.currentMonthBreakdown
                     )
 
+                    ProfileExportRow(exportURL: viewModel.exportFileURL)
+                        .appCardSurface()
+
                     ProfileSettingsTogglesCard(viewModel: viewModel)
 
                     ProfileSettingsCardView(

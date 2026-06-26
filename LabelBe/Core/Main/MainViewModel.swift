@@ -16,15 +16,23 @@ final class MainViewModel {
     }
 
     var topTodayRows: [CounterPeriodRow] {
-        counters.topTodayRows(limit: 3)
+        counters.topTodayRows(limit: 2)
     }
 
     var currentMonthPeriods: [MonthPeriodTotal] {
         counters.monthPeriodTotals(forMonthContaining: .now)
     }
 
+    var todayBreakdown: EntryBreakdown {
+        counters.todayEntryBreakdown
+    }
+
+    var weekComparison: WeekComparison {
+        counters.weekComparison()
+    }
+
     func refreshCounters() {
-        counters = dataManager.fetchCounters()
+        counters = dataManager.fetchActiveCounters()
     }
 
     func createCounter(name: String, icon: String, tags: [String]) {

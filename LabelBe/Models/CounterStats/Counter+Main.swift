@@ -12,8 +12,17 @@ extension Counter {
 }
 
 extension Array where Element == Counter {
+    func sortedForDisplay() -> [Counter] {
+        sorted { lhs, rhs in
+            if lhs.isPinned != rhs.isPinned {
+                return lhs.isPinned && !rhs.isPinned
+            }
+            return lhs.lastInteractionDate > rhs.lastInteractionDate
+        }
+    }
+
     func latestCounters(limit: Int = 2) -> [Counter] {
-        sorted { $0.lastInteractionDate > $1.lastInteractionDate }
+        sortedForDisplay()
             .prefix(limit)
             .map { $0 }
     }
@@ -38,5 +47,10 @@ extension Array where Element == Counter {
             }
         }
         return result.sorted { $0.lowercased() < $1.lowercased() }
+    }
+
+    func filtered(byTag tag: String?) -> [Counter] {
+        guard let tag else { return self }
+        return filter { $0.tags.contains(tag) }
     }
 }
